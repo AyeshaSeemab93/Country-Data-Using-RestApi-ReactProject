@@ -42,6 +42,8 @@ setSelectedCountry(country)
 )}
 
   return (
+    <>
+    <h1>Calling WebApi(s) to Retrieve Data about Different Countries</h1>
     <div>
       Find countries: <input
         type="text"
@@ -70,6 +72,7 @@ setSelectedCountry(country)
       {selectedCountry && (<CountryInfo country={selectedCountry}/>)}
 
     </div>
+    </>
   );
 };
 

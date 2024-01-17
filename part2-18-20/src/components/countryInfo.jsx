@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 // components/CountryInfo.js
 
 import React, { useState, useEffect } from 'react';
@@ -15,7 +16,11 @@ const CountryInfo = ({ country }) => {
         const response = await axios.get(
           `https://api.openweathermap.org/data/2.5/weather?q=${country.capital[0]}&APPID=${apiKey}`
         );
-        setWeatherData(response.data);
+              // Convert temperature from Kelvin to Celsius
+      const temperatureInCelsius = response.data.main.temp - 273.15;
+
+         // Update the state with the converted temperature
+      setWeatherData({ ...response.data, main: { ...response.data.main, temp: temperatureInCelsius } });
         setLoading(false);
       } catch (error) {
         console.error('Error fetching weather data:', error);
@@ -49,7 +54,7 @@ const CountryInfo = ({ country }) => {
         <div>
           <h1>Weather in {country.capital[0]}</h1>
           <p>Weather: {weatherData.weather[0].description}</p>
-          <p>Temperature: {weatherData.main.temp} °C</p>
+          <p>Temperature: {weatherData.main.temp.toFixed(2)} °C</p>
           <img
             src={`https://openweathermap.org/img/w/${weatherData.weather[0].icon}.png`}
             alt="Weather Icon"
